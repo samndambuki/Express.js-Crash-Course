@@ -1,20 +1,20 @@
-const express = require('express')
+const express = require("express");
 //path module deals with file paths
-const path = require('path');
-const members = require('./Members')
-const logger = require('./middleware/logger')
+const path = require("path");
+
+const logger = require("./middleware/logger");
 
 const app = express();
 
+//Body Parser middleware
+//hanlde raw json
+app.use(express.json())
+//handle form submissions
+//hanlde urlencoded data
+app.use(express.urlencoded({extended:false}))
+
 //Init middleware
 // app.use(logger);
-
-//simple rest api
-//gets all members
-//middleware functions have access to req, res
-app.get('/api/members',(req,res)=>{
-    res.json(members)
-})
 
 //you can also use function syntax : function(req,res){}
 // app.get('/',(req,res)=>{
@@ -26,23 +26,24 @@ app.get('/api/members',(req,res)=>{
 //__dirname - current directory
 //use - method we use when we want to include middleware
 //point to public
-app.use(express.static(path.join(__dirname,'public')))
+app.use(express.static(path.join(__dirname, "public")));
+
+//Members api routes
+app.use("/api/members", require("./routes/api/members"));
 
 //checks for port number in an environment variable
 //otherwise it uses 5000
-const PORT  = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
 
-app.listen(PORT,()=>{
-    console.log(`Server started at port ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server started at port ${PORT}`);
 });
 
 // /- is the route for the index page
 //routes or endpoints
-
 
 ///nodemon - constatntly watch our server, so that we dont keep reloading
 //npm i -D -> depth dependency. Meaning we are not using it in production
 
 //node index - have to keep restarting
 //nodemin - constantly watch it
-

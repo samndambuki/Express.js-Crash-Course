@@ -1,2 +1,18 @@
 ###
 GET http://localhost:5000/api/members
+
+###
+GET http://localhost:5000/api/members/1
+
+
+###
+POST http://localhost:5000/api/members
+Content-Type: application/json
+
+{
+    "name":"Samuel Smith",
+    "email":"smith@gmail"
+}
+
+
+
