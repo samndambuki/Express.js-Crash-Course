@@ -2,27 +2,32 @@ const express = require("express");
 //path module deals with file paths
 const path = require("path");
 
-const exphbs =  require("express-handlebars")
+const exphbs = require("express-handlebars");
 
 const logger = require("./middleware/logger");
+const members = require("./Members");
+const { title } = require("process");
 
 const app = express();
 
 //handle bars middleware
-app.engine('handlebars', exphbs({defaultLayout:'main'}));
-app.set('view engine', 'handlebars');
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 //Body Parser middleware
 //hanlde raw json
-app.use(express.json())
+app.use(express.json());
 //handle form submissions
 //hanlde urlencoded data
-app.use(express.urlencoded({extended:false}))
+app.use(express.urlencoded({ extended: false }));
 
 //Home Page route
-app.get("/",(req,res)=>{
-  res.render("index")
-})
+app.get("/", (req, res) => {
+  res.render("index",{
+    title: "Member App",
+    members
+  })
+});
 
 //Init middleware
 // app.use(logger);
