@@ -49,19 +49,35 @@ router.post("/", (req, res) => {
 
 //update member
 router.put("/:id", (req, res) => {
-  const found = members.some((member) => member.id === req.params.id);
+  const found = members.some((member) => member.id === parseInt(req.params.id));
 
   if (found) {
-    const updateMember = req.body;
-    members.forEach(member=>{
-      if(member.id === parseInt(req.params.id)){
-        member.name = req.body.name;
-        member.email = req.body.email
+    const updatedMember = req.body;
+    members.forEach((member) => {
+      if (member.id === parseInt(req.params.id)) {
+        member.name = updatedMember.name ? updatedMember.name : member.name;
+        member.email = updatedMember.email ? updatedMember.email : member.email;
+        res.json({ msg: "Member updated", member });
       }
     });
-
   } else {
-    res.status(400).json({ msg: `No memmber with id of ${req.params.id}` });
+    res.status(400).json({ msg: `No member with id of ${req.params.id}` });
+  }
+});
+
+//delete member
+router.delete("/:id", (req, res) => {
+  const found = members.some((member) => member.id === parseInt(req.params.id));
+
+  if (found) {
+    res.json({
+      msg: "Member deleted",
+      members: members.filter(
+        (member) => member.id !== parseInt(req.params.id)
+      ),
+    });
+  } else {
+    res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
   }
 });
 

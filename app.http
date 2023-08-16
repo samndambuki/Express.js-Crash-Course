@@ -14,5 +14,16 @@ Content-Type: application/json
     "email":"smith@gmail"
 }
 
+###
+PUT http://localhost:5000/api/members/1
+Content-Type: application/json
+
+{
+    "email":"john@yahoo.com"
+}
+
+###
+DELETE http://localhost:5000/api/members/1
+
 
 
